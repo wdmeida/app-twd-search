@@ -1,7 +1,7 @@
-import { Http } from '@angular/http'
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Injectable } from "@angular/core";
 import 'rxjs/add/operator/map';
+
 
 /*
   Generated class for the TwdServiceProvider provider.
@@ -12,9 +12,9 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class TwdServiceProvider {
   public data: any;
-
+  
   constructor(public http: Http) {
-    console.log('Hello TwdServiceProvider Provider');
+    console.log("Hello HeroService");
   }
 
   public load() {
@@ -35,4 +35,19 @@ export class TwdServiceProvider {
     });
   }
 
+  public getEpisodeById(id: number) {
+    if (this.data) {
+      return Promise.resolve(this.data);
+    }
+
+    return new Promise(resolve => {
+      this.http
+        .get(`http://api.tvmaze.com/episodes/${id}`)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          resolve(this.data);
+        });
+    });
+  }
 }

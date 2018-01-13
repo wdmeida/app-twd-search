@@ -7,14 +7,20 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { TwdServiceProvider } from '../providers/twd-service/twd-service';
+import { SearchPipe } from '../pipes/search/search';
+import { SortPipe } from '../pipes/sort/sort';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    SearchPipe,
+    SortPipe
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
