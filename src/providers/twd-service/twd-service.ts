@@ -1,5 +1,4 @@
 import { Http } from '@angular/http';
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import 'rxjs/add/operator/map';
 
@@ -12,12 +11,13 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class TwdServiceProvider {
-  data: any;
+  public data: any;
+  
   constructor(public http: Http) {
     console.log("Hello HeroService");
   }
 
-  load() {
+  public load() {
     if (this.data) {
       return Promise.resolve(this.data);
     }
@@ -27,6 +27,22 @@ export class TwdServiceProvider {
         .get(
           `https://api.tvmaze.com/singlesearch/shows?q=the-walking-dead&embed=episodes`
         )
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          resolve(this.data);
+        });
+    });
+  }
+
+  public getEpisodeById(id: number) {
+    if (this.data) {
+      return Promise.resolve(this.data);
+    }
+
+    return new Promise(resolve => {
+      this.http
+        .get(`http://api.tvmaze.com/episodes/${id}`)
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
