@@ -11,6 +11,10 @@ export class HomePage {
   public obj: any;
   public result: any;
 
+  public descending: boolean = false;
+  public order: number;
+  public column: string = 'name';
+
   constructor(
     public navCtrl: NavController,
     public twdService: TwdServiceProvider
@@ -24,5 +28,10 @@ export class HomePage {
         this.obj = data;
         this.result = this.obj._embedded.episodes;
       });
+  }
+
+  public sort() {
+    this.descending = !this.descending;
+    this.order = this.descending ? 1 : -1;
   }
 }
